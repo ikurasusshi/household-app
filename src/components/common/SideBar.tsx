@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import HomeIcon from "@mui/icons-material/Home";
+import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 
 interface SidebarProps {
   drawerWidth: number;
@@ -20,12 +22,11 @@ interface SidebarProps {
   handleDrawerTransitionEnd: () => void;
 }
 
-// type SidebarProps = {
-//   drawerWidth: number;
-//   mobileOpen: boolean;
-//   handleDrawerClose: () => void;
-//   handleDrawerTransitionEnd: () => void;
-// };
+interface menuItem {
+  text: string;
+  path: string;
+  icon: React.ComponentType;
+}
 
 const SideBar = ({
   drawerWidth,
@@ -33,31 +34,24 @@ const SideBar = ({
   handleDrawerClose,
   handleDrawerTransitionEnd,
 }: SidebarProps) => {
+  const MenuItems: menuItem[] = [
+    { text: "Home", path: "/", icon: HomeIcon },
+    { text: "Report", path: "/report", icon: AutoGraphIcon },
+  ];
+
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {MenuItems.map((item, index) => (
+          <ListItem key={index} disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+                <item.icon />
               </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
